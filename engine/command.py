@@ -17,7 +17,6 @@ def takecommand():
     r = sr.Recognizer()
 
     with sr.Microphone() as source:
-        speak("How can I help you?")
         print('listening...')
         eel.DisplayMessage('listening...')
         r.pause_threshold = 1
@@ -39,22 +38,46 @@ def takecommand():
     return query.lower()
 
 @eel.expose
-def allCommands():
+def allCommands(message=1):
 
-    try:
+    if message == 1:
         query = takecommand()
         print(query)
+    else:
+        query= message
+
+    try:
+    
+
 
         if "open" in query:
             from engine.features import openCommand
             openCommand(query)
 
-        elif "on youtube":
+        elif "on youtube" in query:
             from engine.features import PlayYoutube
             PlayYoutube(query)
+
+        elif "send a message" in query or "phone call" in query or "video call" in query:
+            from engine.features import findContact, whatsApp
+            flag = ""
+            contact_no, name = findContact(query)
+            if(contact_no != 0):
+
+                if "send a message" in query:
+                    flag = 'message'
+                    speak("what message to send")
+                    query = takecommand()
+                    
+                elif "phone call" in query:
+                    flag = 'call'
+                else:
+                    flag = 'video call'
+                    
+                whatsApp(contact_no, query, flag, name)
             
         else:
-            print("Not run")
+            print("Not ran")
 
     except:
         print("error")

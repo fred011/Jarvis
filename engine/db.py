@@ -1,3 +1,4 @@
+import csv
 import sqlite3
 
 con = sqlite3.connect("jarvis.db")
@@ -10,12 +11,12 @@ cursor = con.cursor()
 # cursor.execute(query)
 # con.commit() 
 
-query = "CREATE TABLE IF NOT EXISTS web_command(id integer primary key, name VARCHAR(100), url VARCHAR(1000))"
-cursor.execute(query)
-0
-query = "INSERT INTO web_command VALUES (null,'youtube music', 'https://music.youtube.com/')"
-cursor.execute(query)
-con.commit()
+# query = "CREATE TABLE IF NOT EXISTS web_command(id integer primary key, name VARCHAR(100), url VARCHAR(1000))"
+# cursor.execute(query)
+# 0
+# query = "INSERT INTO web_command VALUES (null,'youtube music', 'https://music.youtube.com/')"
+# cursor.execute(query)
+# con.commit() 
 
 
 # testing module
@@ -24,12 +25,12 @@ con.commit()
 # results = cursor.fetchall()
 # print(results[0][0])
 
-# Create a table with the desired columns
-#cursor.execute('''CREATE TABLE IF NOT EXISTS contacts (id integer primary key, name VARCHAR(200), mobile_no VARCHAR(255), email VARCHAR(255) NULL)''')
+# # Create a table with the desired columns
+# cursor.execute('''CREATE TABLE IF NOT EXISTS contacts (id integer primary key, name VARCHAR(200), mobile_no VARCHAR(255), email VARCHAR(255) NULL)''')
 
-
-# Specify the column indices you want to import (0-based index)
-# Example: Importing the 1st and 3rd columns
+ 
+# # Specify the column indices you want to import (0-based index)
+# # Example: Importing the 1st and 3rd columns
 # desired_columns_indices = [0, 30]
 
 # # Read data from CSV and insert into SQLite table for the desired columns
@@ -43,11 +44,11 @@ con.commit()
 # con.commit()
 # con.close()
 
-# query = "INSERT INTO contacts VALUES (null,'pawan', '1234567890', 'null')"
-# cursor.execute(query)
-# con.commit()
+query = "INSERT INTO contacts VALUES (null,'Little Brother', '0656921302', '')"
+cursor.execute(query)
+con.commit()
 
-# query = 'kunal'
+# query = 'm'
 # query = query.strip().lower()
 
 # cursor.execute("SELECT mobile_no FROM contacts WHERE LOWER(name) LIKE ? OR LOWER(name) LIKE ?", ('%' + query + '%', query + '%'))
