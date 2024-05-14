@@ -12,20 +12,22 @@ import pyaudio
 import pyautogui
 from engine.command import speak
 from engine.config import ASSISTANT_NAME
+# Playing assiatnt sound function
 import pywhatkit as kit
 import pvporcupine
-from engine.helper import extract_yt_term, remove_words
 
+from engine.helper import extract_yt_term, remove_words
+from hugchat import hugchat
 
 con = sqlite3.connect("jarvis.db")
 cursor = con.cursor()
-# Playing assistant sound function 
 
-@eel.expose 
+@eel.expose
 def playAssistantSound():
     music_dir = "www\\assets\\audio\\start_sound.mp3"
     playsound(music_dir)
 
+    
 def openCommand(query):
     query = query.replace(ASSISTANT_NAME, "")
     query = query.replace("open", "")
@@ -62,10 +64,13 @@ def openCommand(query):
         except:
             speak("some thing went wrong")
 
+       
+
 def PlayYoutube(query):
     search_term = extract_yt_term(query)
     speak("Playing "+search_term+" on YouTube")
     kit.playonyt(search_term)
+
 
 def hotword():
     porcupine=None
@@ -105,6 +110,8 @@ def hotword():
         if paud is not None:
             paud.terminate()
 
+
+
 # find contacts
 def findContact(query):
     
@@ -118,15 +125,14 @@ def findContact(query):
         print(results[0][0])
         mobile_number_str = str(results[0][0])
 
-        if not mobile_number_str.startswith('+27'):
-            mobile_number_str = '+27' + mobile_number_str
+        if not mobile_number_str.startswith('+91'):
+            mobile_number_str = '+91' + mobile_number_str
 
         return mobile_number_str, query
     except:
-        speak('not exist in contacts')
+        speak('contact does not exist')
         return 0, 0
     
-
 def whatsApp(mobile_no, message, flag, name):
     
 
@@ -166,3 +172,14 @@ def whatsApp(mobile_no, message, flag, name):
 
     pyautogui.hotkey('enter')
     speak(jarvis_message)
+
+# chat bot 
+def chatBot(query):
+    user_input = query.lower()
+    chatbot = hugchat.ChatBot(cookie_path="engine\cookies.json")
+    id = chatbot.new_conversation()
+    chatbot.change_conversation(id)
+    response =  chatbot.chat(user_input)
+    print(response)
+    speak(response)
+    return response
